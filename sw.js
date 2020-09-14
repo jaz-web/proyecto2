@@ -1,37 +1,53 @@
-﻿// Files to cache
-var cacheName = 'proyecto2-v1';
-var appShellFiles = [
+// Perform install steps
+let CACHE_NAME = 'my-cache';
+let urlsToCache = [
   '/proyecto2/',
   '/proyecto2/favicon2.ico',
   '/proyecto2/logo.png',
   '/proyecto2/launcher-icon-2x.png',
   '/proyecto2/launcher-icon-3x.png'
-];
+
+    ];
+
+self.addEventListener('install', function(event) {
+// Perform install steps
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+        .then(function(cache) {
+            console.log('Opened cache');
+        return cache.addAll(urlsToCache);
+        })
+    );
+});
 
 
-// Installing Service Worker
-self.addEventListener('install', function(e) {
-  console.log('[Service Worker] Install');
-  e.waitUntil(
-    caches.open(cacheName).then(function(cache) {
-      console.log('[Service Worker] Caching all: app shell and content');
-      return cache.addAll(appShellFiles);
-    })
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    caches.match(event.request)
+      .then(function(response) {
+        // Cache hit - return response
+        if (response) {
+          return response;
+        }
+        return fetch(event.request);
+      }
+    )
   );
 });
 
-// Fetching content using Service Worker
-self.addEventListener('fetch', function(e) {
-  e.respondWith(
-    caches.match(e.request).then(function(r) {
-      console.log('[Service Worker] Fetching resource: '+e.request.url);
-      return r || fetch(e.request).then(function(response) {
-        return caches.open(cacheName).then(function(cache) {
-          console.log('[Service Worker] Caching new resource: ' + e.request.url);
-          cache.put(e.request, response.clone());
-          return response;
-        });
-      });
+
+
+self.addEventListener('activate', function(event) {
+  var cacheWhitelist = ['pigment'];
+  event.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.map(function(cacheName) {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
     })
   );
 });
