@@ -4,7 +4,6 @@ var appShellFiles = [
   '/proyecto2/',
   '/proyecto2/favicon2.ico',
   '/proyecto2/logo.png',
-  '/proyecto2/launcher-icon-1x.png',
   '/proyecto2/launcher-icon-2x.png',
   '/proyecto2/launcher-icon-3x.png'
 ];
