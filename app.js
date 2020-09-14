@@ -1,7 +1,18 @@
-// Registering Service Worker
-if('serviceWorker' in navigator) {
-	navigator.serviceWorker.register('/proyecto2/sw.js');
-};
+﻿// Registering Service Worker
+/*if('serviceWorker' in navigator) {
+	navigator.serviceWorker.register('sw.js');
+};*/
 
+//****************
 
-
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js').then(function(registration) {
+            // Registration was successful
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, function(err) {
+            // registration failed :(
+            console.log('ServiceWorker registration failed: ', err);
+        });
+    });
+}

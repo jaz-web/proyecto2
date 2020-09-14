@@ -1,12 +1,12 @@
-// Files to cache
+﻿// Files to cache
 var cacheName = 'proyecto2-v1';
 var appShellFiles = [
   '/proyecto2/',
   '/proyecto2/favicon2.ico',
-  '/proyecto2/img/logo.png',
-  '/proyecto2/icons/launcher-icon-1x.png',
-  '/proyecto2/icons/launcher-icon-2x.png',
-  '/proyecto2/icons/launcher-icon-3x.png'
+  '/proyecto2/logo.png',
+  '/proyecto2/launcher-icon-1x.png',
+  '/proyecto2/launcher-icon-2x.png',
+  '/proyecto2/launcher-icon-3x.png'
 ];
 
 
